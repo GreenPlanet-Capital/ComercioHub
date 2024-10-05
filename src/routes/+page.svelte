@@ -1,10 +1,9 @@
 <script>
-    import { Alert } from "flowbite-svelte";
+    import Portfolio from "./Portfolio.svelte";
+    import Positions from "./Positions.svelte";
+
 </script>
 
-<div class="p-8">
-    <Alert>
-        <span class="font-medium">Info alert!</span>
-        Change a few things up and try submitting again.
-    </Alert>
-</div>
+<Portfolio/>
+
+<Positions/>
