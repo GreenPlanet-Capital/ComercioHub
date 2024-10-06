@@ -40,7 +40,6 @@
     makeRequest("portfolio", null, null, false)
         .then((res) => {
             PortfolioStore.set(Portfolio.fromJSON(res));
-            console.log(Portfolio.fromJSON(res));
         })
         .catch((err) => {
             console.error(err);

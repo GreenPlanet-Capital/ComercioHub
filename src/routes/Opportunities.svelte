@@ -18,29 +18,30 @@
         ChevronDownOutline,
         ChevronRightOutline,
     } from "flowbite-svelte-icons";
-    import CreditCard from "./widgets/CreditCard.svelte";
     import StatusBadge from "./widgets/StatusBadge.svelte";
     import LastRange from "./widgets/LastRange.svelte";
     import { makeRequest } from "./utils/req";
-    import { Positions } from "./models/position";
-    import { PositionStore } from "./utils/store";
+    import { OpportunityStore } from "./utils/store";
+    import { Opportunities } from "./models/opportunity";
+    import { OPPS_LIMIT } from "./utils/constants";
 
     let dark = false;
-    let positions = Positions.create();
+    let opportunities = Opportunities.create();
 
-    PositionStore.subscribe((value) => {
-        positions = value;
+    OpportunityStore.subscribe((value) => {
+        console.log(value);
+        opportunities = value;
     });
 
-    makeRequest("position", null, null, false)
+    makeRequest(`recommend?limit=${OPPS_LIMIT}`, null, null, false)
         .then((res) => {
-            PositionStore.set(Positions.fromJSON(res));
+            OpportunityStore.set(Opportunities.fromJSON(res));
         })
         .catch((err) => {
             console.error(err);
         });
 
-    const headers = ["Ticker", "Order Type", "Quantity", "Default Price"];
+    const headers = ["Ticker", "Order Type", "Default Price", "Score"];
 </script>
 
 <Card size="xl" class="shadow-sm max-w-none">
@@ -50,12 +51,12 @@
                 tag="h3"
                 class="-ml-0.25 mb-2 text-xl font-semibold dark:text-white"
             >
-                Positions
+                Opportunities
             </Heading>
             <span
                 class="text-base font-normal text-gray-500 dark:text-gray-400"
             >
-                This is a list of current holdings in your portfolio
+                This is a list of recommended positions for your portfolio
             </span>
         </div>
         <div
@@ -111,30 +112,26 @@
             {/each}
         </TableHead>
         <TableBody>
-            {#each positions.getPositions() as pos}
+            {#each opportunities.getOpportunities() as opp}
                 <TableBodyRow>
                     <TableBodyCell class="px-4 font-normal"
-                        >{pos.ticker}</TableBodyCell
+                        >{opp.ticker}</TableBodyCell
                     >
                     <TableBodyCell
                         class="px-4 font-normal text-gray-500 dark:text-gray-400"
                     >
                         <StatusBadge
-                            state={pos.getOrders()[0].order_type === 1
-                                ? "long"
-                                : "short"}
+                            state={opp.order_type === 1 ? "long" : "short"}
                             {dark}
                         />
                     </TableBodyCell>
                     <TableBodyCell class="px-4"
-                        >{pos
-                            .getOrders()[0]
-                            .default_price.toFixed(2)}</TableBodyCell
+                        >{opp.default_price}</TableBodyCell
                     >
                     <TableBodyCell
                         class="px-4 font-normal  text-gray-500 dark:text-gray-400"
                     >
-                        {pos.getOrders()[0].quantity.toFixed(2)}
+                        {opp.score.toFixed(2)}
                     </TableBodyCell>
                 </TableBodyRow>
             {/each}

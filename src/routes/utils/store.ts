@@ -1,13 +1,8 @@
 import { writable } from "svelte/store";
 import { Portfolio } from "../models/portfolio";
-import { Order, Position, Positions } from "../models/position";
+import { Positions } from "../models/position";
+import { Opportunities } from "../models/opportunity";
 
 export const PortfolioStore = writable(Portfolio.create());
 export const PositionStore = writable(Positions.create());
-
-export function addPosition(ticker: string, orders: Order[]): void {
-    PositionStore.update((store) => {
-        store.addPosition(new Position(ticker, orders));
-        return store;
-    });
-}
+export const OpportunityStore = writable(Opportunities.create());

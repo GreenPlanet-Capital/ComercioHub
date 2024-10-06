@@ -6,13 +6,13 @@
 	export let dark: boolean = false;
 
 	const states = {
-		buy: 'buy',
-		sell: 'Canceled',
+		long: 'long',
+		short: 'short',
 	};
 
 	const colors: Record<string, BadgeProps['color']> = {
-		buy: 'green',
-		sell: 'red',
+		long: 'green',
+		short: 'red',
 	};
 </script>
 

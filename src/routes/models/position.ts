@@ -1,20 +1,4 @@
 
-export class EnterPosition {
-    ticker: string;
-    quantity: number;
-    order_type: number;
-
-    constructor(
-        ticker: string,
-        quantity: number,
-        order_type: number
-    ) {
-        this.ticker = ticker;
-        this.quantity = quantity;
-        this.order_type = order_type;
-    }
-}
-
 export class Order {
     order_type: number;
     default_price: number;
