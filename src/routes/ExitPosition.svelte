@@ -1,22 +1,21 @@
 <script>
-
     import { Button } from "flowbite-svelte";
-    import { PlusOutline } from "flowbite-svelte-icons";
+    import { MinusOutline } from "flowbite-svelte-icons";
     import ManagePositions from "./ManagePositions.svelte";
 
     let openUser = false;
-
 </script>
 
 <div class="flex items-center space-x-2">
     <Button
         size="sm"
-        color="purple"
+        color="yellow"
         class="gap-2 whitespace-nowrap px-3 color-purple"
-        on:click={() => ((openUser = true))}
+        on:click={() => (openUser = true)}
     >
-        <PlusOutline size="sm" />Enter Position
+        <MinusOutline size="sm" color="black" />
+        <div class="text-black">Exit Position</div>
     </Button>
 </div>
 
-<ManagePositions bind:open={openUser} data="enter" />
+<ManagePositions bind:open={openUser} data="exit" />

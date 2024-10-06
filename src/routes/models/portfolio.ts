@@ -22,24 +22,28 @@ export class History {
 export class Portfolio {
     value: number;
     history: History[];
+    snp: number[];
 
     constructor(
         value: number,
-        history: History[]
+        history: History[],
+        snp: number[]
     ) {
         this.history = history;
         this.value = value;
+        this.snp = snp;
     }
 
     static create(
     ): Portfolio {
-        return new Portfolio(0, []);
+        return new Portfolio(0, [], []);
     }
 
     static fromJSON(json: any): Portfolio {
         return new Portfolio(
             json.value,
-            json.history.map((history: any) => History.fromJSON(history))
+            json.history.map((history: any) => History.fromJSON(history)),
+            json.snp
         );
     }
 }

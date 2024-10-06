@@ -23,7 +23,6 @@
 			false,
 		)
 			.then((res) => {
-				console.log(res);
 				// TODO: dynamically update positions
 				open = false;
 			})
@@ -75,6 +74,7 @@
 					{/if}
 				</Label>
 				<Label class="col-span-6 space-y-2 sm:col-span-3">
+					<!-- TODO: prefix $ to this field -->
 					<span>Amount</span>
 					<Input
 						name="amount"

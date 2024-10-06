@@ -4,7 +4,6 @@
     import { PortfolioStore } from "./utils/store";
     import ChartWidget from "./widgets/ChartWidget.svelte";
     import getChartOptions from "./config/chart_options";
-    import Change from "./widgets/Change.svelte";
 
     let portfolio = Portfolio.create();
     let chartOptions = getChartOptions(false);
@@ -26,11 +25,20 @@
         portfolio = new_portfolio;
         chartOptions.series = [
             {
-                name: "",
+                name: "Portfolio Value",
                 data: portfolio.history.map((item) => {
                     return {
                         x: new Date(item.date).getTime(),
                         y: item.value,
+                    };
+                }),
+            },
+            {
+                name: "S&P 500",
+                data: portfolio.history.map((item, idx) => {
+                    return {
+                        x: new Date(item.date).getTime(),
+                        y: portfolio.snp[idx],
                     };
                 }),
             },
@@ -46,18 +54,14 @@
         });
 </script>
 
-<div class="mt-px space-y-4">
-    <div class="grid gap-10 xl:grid-cols-2 2xl:grid-cols-1">
-        <ChartWidget
-            {chartOptions}
-            title="${portfolio.value.toFixed(2)}"
-            subtitle="Portfolio Value"
-            percentChange={portfolio.history.length < 2
-                ? 0
-                : percentDiff(
-                      portfolio.history[0].value,
-                      portfolio.history[1].value,
-                  )}
-        />
-    </div>
-</div>
+<ChartWidget
+    {chartOptions}
+    title="${portfolio.value.toFixed(2)}"
+    subtitle="Portfolio Value"
+    percentChange={portfolio.history.length < 2
+        ? 0
+        : percentDiff(
+              portfolio.history[portfolio.history.length - 1].value,
+              portfolio.history[portfolio.history.length - 2].value,
+          )}
+/>

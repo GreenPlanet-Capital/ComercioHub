@@ -29,7 +29,6 @@
     let opportunities = Opportunities.create();
 
     OpportunityStore.subscribe((value) => {
-        console.log(value);
         opportunities = value;
     });
 
@@ -44,8 +43,8 @@
     const headers = ["Ticker", "Order Type", "Default Price", "Score"];
 </script>
 
-<Card size="xl" class="shadow-sm max-w-none">
-    <div class="items-center justify-between lg:flex">
+<Card size="xl" class="shadow-sm">
+    <div class="items-center justify-between lg:flex relative overflow-y-auto">
         <div class="mb-4 mt-px lg:mb-0">
             <Heading
                 tag="h3"
@@ -102,16 +101,17 @@
         hoverable={true}
         noborder
         striped
-        class="mt-6 min-w-full divide-y divide-gray-200 dark:divide-gray-600"
+        class="mt-6 min-w-full divide-y divide-gray-200 dark:divide-gray-600 table-fixed relative overflow-y-auto"
     >
         <TableHead class="bg-gray-50 dark:bg-gray-700">
             {#each headers as header}
-                <TableHeadCell class="whitespace-nowrap p-4 font-normal"
+                <TableHeadCell
+                    class="whitespace-nowrap p-4 font-normal sticky top-0 scope='col'"
                     >{header}</TableHeadCell
                 >
             {/each}
         </TableHead>
-        <TableBody>
+        <TableBody class="hover:bg-gray-50 dark:hover:bg-gray-600 h-96">
             {#each opportunities.getOpportunities() as opp}
                 <TableBodyRow>
                     <TableBodyCell class="px-4 font-normal"

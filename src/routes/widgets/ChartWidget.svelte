@@ -10,7 +10,7 @@
     export let percentChange: number = 0;
 </script>
 
-<Card size="xl" class="w-full max-w-none 2xl:col-span-2">
+<Card size="xl" class="w-full">
     <div class="mb-4 flex items-center justify-between">
         <div class="flex-shrink-0">
             <Heading tag="h3" class="text-2xl">{title}</Heading>

@@ -16,9 +16,7 @@
     import {
         CalendarMonthOutline,
         ChevronDownOutline,
-        ChevronRightOutline,
     } from "flowbite-svelte-icons";
-    import CreditCard from "./widgets/CreditCard.svelte";
     import StatusBadge from "./widgets/StatusBadge.svelte";
     import LastRange from "./widgets/LastRange.svelte";
     import { makeRequest } from "./utils/req";
@@ -40,10 +38,10 @@
             console.error(err);
         });
 
-    const headers = ["Ticker", "Order Type", "Quantity", "Default Price"];
+    const headers = ["Ticker", "Order Type", "Close", "Quantity"];
 </script>
 
-<Card size="xl" class="shadow-sm max-w-none">
+<Card size="xl" class="shadow-sm">
     <div class="items-center justify-between lg:flex">
         <div class="mb-4 mt-px lg:mb-0">
             <Heading
