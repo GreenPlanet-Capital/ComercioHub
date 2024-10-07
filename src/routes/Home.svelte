@@ -4,6 +4,7 @@
     import Opportunities from "./Opportunities.svelte";
     import EnterPosition from "./EnterPosition.svelte";
     import ExitPosition from "./ExitPosition.svelte";
+    import StockAnalysis from "./StockAnalysis.svelte";
 </script>
 
 <div class="grid-container">
@@ -14,9 +15,7 @@
         <div class="positions-container">
             <div class="button-container">
                 <EnterPosition />
-                <div style="margin-left: 10px;">
-                    <!-- Add some space between the Enter Position and Exit Position buttons -->
-                </div>
+                <div style="margin-left: 10px;"></div>
                 <ExitPosition />
             </div>
             <Positions />
@@ -25,8 +24,10 @@
     <div class="grid-item">
         <Opportunities />
     </div>
-    <!-- Empty grid item to complete the 2x2 grid -->
-    <div class="grid-item"></div>
+
+    <div class="grid-item">
+        <StockAnalysis />
+    </div>
 </div>
 
 <style>

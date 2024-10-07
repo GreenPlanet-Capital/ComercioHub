@@ -38,7 +38,7 @@
             console.error(err);
         });
 
-    const headers = ["Ticker", "Order Type", "Close", "Quantity"];
+    const headers = ["Ticker", "Order Type", "Default Price", "Quantity"];
 </script>
 
 <Card size="xl" class="shadow-sm">
