@@ -21,7 +21,7 @@
     import LastRange from "./widgets/LastRange.svelte";
     import { makeRequest } from "./utils/req";
     import { Positions } from "./models/position";
-    import { PositionStore } from "./utils/store";
+    import { fetchPositions, PositionStore } from "./utils/store";
     import Change from "./widgets/Change.svelte";
 
     let dark = false;
@@ -31,13 +31,7 @@
         positions = value;
     });
 
-    makeRequest("position", null, null, false)
-        .then((res) => {
-            PositionStore.set(Positions.fromJSON(res));
-        })
-        .catch((err) => {
-            console.error(err);
-        });
+    fetchPositions();
 
     const headers = [
         "Ticker",

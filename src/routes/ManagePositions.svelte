@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Button, Input, Label, Modal } from "flowbite-svelte";
 	import { makeRequest } from "./utils/req";
+	import { fetchPositions } from "./utils/store";
 	export let open: boolean = false; // modal control
 	export let data: "enter" | "exit" = "enter";
 	let showBuy = true;
@@ -23,8 +24,8 @@
 			false,
 		)
 			.then((res) => {
-				// TODO: dynamically update positions
 				open = false;
+				fetchPositions();
 			})
 			.catch((err) => {
 				console.error(err);

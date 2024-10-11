@@ -9,16 +9,22 @@ export async function makeRequest(
     let response;
     queryBody = queryBody || {};
 
+    const [token] = [
+        localStorage.getItem("token"),
+    ];
+    const headers: any = { Authorization: `Bearer ${token}` };
+
     if (reqBody === null) {
         response = fetch(
             `${SERVER_URL}/${endpoint}` +
             (Object.keys(queryBody).length !== 0
                 ? "?" + new URLSearchParams(queryBody).toString()
                 : "")
+            , {
+                headers: headers,
+            }
         );
     } else {
-        let headers: any = {};
-
         if (!isFormData) {
             headers["Content-Type"] = "application/json";
         }
@@ -30,5 +36,5 @@ export async function makeRequest(
         });
     }
 
-    return response.then((r) => r.json());
+    return response.then((r) => r.ok ? r.json() : r.json().then((e) => Promise.reject(e)));
 }

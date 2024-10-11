@@ -13,8 +13,8 @@ export class History {
 
     static fromJSON(json: any): History {
         return new History(
-            json[0],
-            json[1]
+            json.date,
+            json.value
         );
     }
 }

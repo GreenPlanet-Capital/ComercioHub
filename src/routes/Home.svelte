@@ -5,9 +5,19 @@
     import EnterPosition from "./EnterPosition.svelte";
     import ExitPosition from "./ExitPosition.svelte";
     import StockAnalysis from "./StockAnalysis.svelte";
+    import { Button } from "flowbite-svelte";
+
+    const logout = () => {
+        localStorage.removeItem("token");
+        window.location.reload();
+    };
 </script>
 
 <div class="grid-container">
+    <Button class="absolute top-4 right-4" on:click={logout} color="blue">
+        Logout
+    </Button>
+
     <div class="grid-item">
         <Portfolio />
     </div>
