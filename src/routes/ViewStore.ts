@@ -1,5 +1,7 @@
 import { writable } from "svelte/store";
 
 export const viewStore = writable({
-    home: 0,
+    login: 0,
+    register: 1,
+    home: 2,
 });
