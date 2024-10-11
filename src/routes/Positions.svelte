@@ -22,6 +22,7 @@
     import { makeRequest } from "./utils/req";
     import { Positions } from "./models/position";
     import { PositionStore } from "./utils/store";
+    import Change from "./widgets/Change.svelte";
 
     let dark = false;
     let positions = Positions.create();
@@ -38,7 +39,14 @@
             console.error(err);
         });
 
-    const headers = ["Ticker", "Order Type", "Default Price", "Quantity"];
+    const headers = [
+        "Ticker",
+        "Order Type",
+        "Avg Price",
+        "Default Price",
+        "pnl",
+        "Quantity",
+    ];
 </script>
 
 <Card size="xl" class="shadow-sm">
@@ -111,9 +119,14 @@
         <TableBody>
             {#each positions.getPositions() as pos}
                 <TableBodyRow>
-                    <TableBodyCell class="px-4 font-normal"
-                        >{pos.ticker}</TableBodyCell
-                    >
+                    <TableBodyCell class="px-4 font-normal">
+                        {pos.ticker}
+                        <Change
+                            value={pos.getOrders()[0].calculatePercentChange()}
+                            since=""
+                            class="justify-end font-medium"
+                        />
+                    </TableBodyCell>
                     <TableBodyCell
                         class="px-4 font-normal text-gray-500 dark:text-gray-400"
                     >
@@ -127,7 +140,15 @@
                     <TableBodyCell class="px-4"
                         >{pos
                             .getOrders()[0]
+                            .avg_price.toFixed(2)}</TableBodyCell
+                    >
+                    <TableBodyCell class="px-4"
+                        >{pos
+                            .getOrders()[0]
                             .default_price.toFixed(2)}</TableBodyCell
+                    >
+                    <TableBodyCell class="px-4"
+                        >{pos.getOrders()[0].pnl.toFixed(2)}</TableBodyCell
                     >
                     <TableBodyCell
                         class="px-4 font-normal  text-gray-500 dark:text-gray-400"

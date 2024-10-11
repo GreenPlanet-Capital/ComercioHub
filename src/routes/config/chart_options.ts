@@ -109,7 +109,7 @@ export default function getChartOptions(dark: boolean): ApexOptions {
                     fontWeight: 500
                 },
                 formatter: function (value: number): string {
-                    return '$' + value;
+                    return '$' + value.toFixed(2);
                 }
             }
         },
