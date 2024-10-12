@@ -1,18 +1,18 @@
-FROM node:bookworm-slim
+FROM node:20-slim
 
-RUN useradd -ms /bin/bash quant
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
 
+RUN corepack enable
 
-USER quant
-RUN mkdir /home/quant/code
+RUN mkdir /code
 
-WORKDIR /home/quant/code
+WORKDIR /code
 
-COPY --chown=quant:quant ComercioHub/package.json .
-RUN npm install
+COPY ComercioHub ./ComercioHub
 
-COPY --chown=quant:quant ComercioHub .
+WORKDIR /code/ComercioHub
 
-WORKDIR /home/quant/code/ComercioHub
+RUN pnpm install
 
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "dev", "--", "--host"]
