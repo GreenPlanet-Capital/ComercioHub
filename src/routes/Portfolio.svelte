@@ -1,7 +1,7 @@
 <script>
     import { makeRequest } from "./utils/req";
     import { Portfolio } from "./models/portfolio";
-    import { PortfolioStore } from "./utils/store";
+    import { fetchPortfolio, PortfolioStore } from "./utils/store";
     import ChartWidget from "./widgets/ChartWidget.svelte";
     import getChartOptions from "./config/chart_options";
     import { percentDiff } from "./utils/funcs";
@@ -33,13 +33,7 @@
         ];
     });
 
-    makeRequest("portfolio", null, null, false)
-        .then((res) => {
-            PortfolioStore.set(Portfolio.fromJSON(res));
-        })
-        .catch((err) => {
-            console.error(err);
-        });
+    fetchPortfolio();
 </script>
 
 <ChartWidget

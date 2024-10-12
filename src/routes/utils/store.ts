@@ -17,3 +17,13 @@ export const fetchPositions = () => {
             console.error(err);
         });
 }
+
+export const fetchPortfolio = () => {
+    makeRequest("portfolio", null, null, false)
+        .then((res) => {
+            PortfolioStore.set(Portfolio.fromJSON(res));
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+}
