@@ -1,19 +1,19 @@
 
 export class History {
-    date: string;
+    timestamp: string;
     value: number;
 
     constructor(
         date: string,
         value: number
     ) {
-        this.date = date;
+        this.timestamp = date;
         this.value = value;
     }
 
     static fromJSON(json: any): History {
         return new History(
-            json.date,
+            json.timestamp,
             json.value
         );
     }

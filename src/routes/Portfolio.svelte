@@ -16,7 +16,7 @@
                 name: "Portfolio Value",
                 data: portfolio.history.map((item) => {
                     return {
-                        x: new Date(item.date).getTime(),
+                        x: new Date(item.timestamp).getTime(),
                         y: item.value,
                     };
                 }),
@@ -25,7 +25,7 @@
                 name: "S&P 500",
                 data: portfolio.history.map((item, idx) => {
                     return {
-                        x: new Date(item.date).getTime(),
+                        x: new Date(item.timestamp).getTime(),
                         y: portfolio.snp[idx],
                     };
                 }),
