@@ -1,12 +1,38 @@
 <script lang="ts">
-	import { Button, Input, Label, Modal } from "flowbite-svelte";
+	import {
+		Alert,
+		Button,
+		Input,
+		Label,
+		Modal,
+		Select,
+	} from "flowbite-svelte";
 	import { makeRequest } from "./utils/req";
 	import { fetchPortfolio, fetchPositions } from "./utils/store";
+	import { onMount } from "svelte";
 	export let open: boolean = false; // modal control
 	export let data: "enter" | "exit" = "enter";
 	let showBuy = true;
 	let ticker = "";
 	let amount = 0;
+
+	let isWrongCredentials = false;
+	let errMessage = "";
+
+	let tickers: string[] = [];
+
+	onMount(async () => {
+		await makeRequest("stock/list", null, null, false)
+			.then((res) => {
+				tickers = res.map((stock: string) => ({
+					value: stock,
+					name: stock,
+				}));
+			})
+			.catch((err) => {
+				console.error(err);
+			});
+	});
 
 	function init(_: HTMLFormElement) {}
 	export const capitalize = (str: string) =>
@@ -29,8 +55,8 @@
 				fetchPortfolio();
 			})
 			.catch((err) => {
-				console.error(err);
-				// TODO: let user know of error
+				isWrongCredentials = true;
+				errMessage = err.detail;
 			});
 	};
 </script>
@@ -40,15 +66,13 @@
 	<div class="space-y-6 p-0">
 		<form action="#" use:init>
 			<div class="grid grid-cols-6 gap-6">
-				<!-- TODO: fetch list from backend and show as selection instead -->
 				<Label class="col-span-6 space-y-2 sm:col-span-3">
 					<span>Ticker</span>
-					<Input
-						name="ticker"
-						class="border outline-none"
-						placeholder="e.g. AAPL"
-						required
+					<Select
+						class="mt-2"
+						items={tickers}
 						bind:value={ticker}
+						placeholder="Select a ticker"
 					/>
 				</Label>
 				<Label class="col-span-6 space-y-2 sm:col-span-3">
@@ -76,8 +100,7 @@
 					{/if}
 				</Label>
 				<Label class="col-span-6 space-y-2 sm:col-span-3">
-					<!-- TODO: prefix $ to this field -->
-					<span>Amount</span>
+					<span>Amount ($)</span>
 					<Input
 						name="amount"
 						type="number"
@@ -90,6 +113,14 @@
 			</div>
 		</form>
 	</div>
+
+	{#if isWrongCredentials}
+		<Alert>
+			<p class="text-sm text-red-500 dark:text-red-400">
+				{errMessage}
+			</p>
+		</Alert>
+	{/if}
 
 	<!-- Modal footer -->
 	<div slot="footer">

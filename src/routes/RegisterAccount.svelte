@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { Alert } from "flowbite-svelte";
     import { LOGO_PATH } from "./utils/constants";
     import { makeRequest } from "./utils/req";
     import { viewStore } from "./ViewStore";
@@ -7,14 +8,12 @@
     let password = "";
     let portfolioCash = 0;
 
+    let isWrongCredentials = false;
+    let errMessage = "";
+
     function loginClick(e: Event) {
         e.preventDefault();
         $viewStore.current = $viewStore.login;
-    }
-
-    function homeClick(e: Event) {
-        e.preventDefault();
-        $viewStore.current = $viewStore.home;
     }
 
     function initPortfolio() {
@@ -41,8 +40,8 @@
                 initPortfolio();
             })
             .catch((err) => {
-                // TODO: Handle error
-                console.error(err);
+                isWrongCredentials = true;
+                errMessage = err.detail[0].msg;
             });
     }
 </script>
@@ -104,7 +103,7 @@
                         <label
                             for="portfolioCash"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                            >Initial Portfolio Cash</label
+                            >Initial Portfolio Cash ($)</label
                         >
                         <input
                             type="number"
@@ -116,6 +115,13 @@
                             bind:value={portfolioCash}
                         />
                     </div>
+                    {#if isWrongCredentials}
+                        <Alert>
+                            <p class="text-sm text-red-500 dark:text-red-400">
+                                {errMessage}
+                            </p>
+                        </Alert>
+                    {/if}
                     <button
                         type="submit"
                         on:click={submitRegisterForm}

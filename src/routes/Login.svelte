@@ -1,12 +1,12 @@
 <script lang="ts">
-    import { Section, Register } from "flowbite-svelte-blocks";
-    import { Button, Checkbox, Label, Input } from "flowbite-svelte";
+    import { Alert } from "flowbite-svelte";
     import { viewStore } from "./ViewStore";
     import { LOGO_PATH } from "./utils/constants";
     import { makeRequest } from "./utils/req";
 
     let email_address = "";
     let password = "";
+    let isWrongCredentials = false;
 
     function registerClick(e: Event) {
         e.preventDefault();
@@ -29,10 +29,10 @@
             .then((res) => {
                 localStorage.setItem("token", res.token);
                 $viewStore.current = $viewStore.home;
+                isWrongCredentials = false;
             })
-            .catch((err) => {
-                // TODO: Handle error
-                console.error(err);
+            .catch((_) => {
+                isWrongCredentials = true;
             });
     }
 </script>
@@ -116,6 +116,13 @@
                             >Forgot password?</a
                         >
                     </div>
+                    {#if isWrongCredentials}
+                        <Alert>
+                            <p class="text-sm text-red-500 dark:text-red-400">
+                                Invalid email or password
+                            </p>
+                        </Alert>
+                    {/if}
                     <button
                         type="submit"
                         on:click={submitLoginForm}

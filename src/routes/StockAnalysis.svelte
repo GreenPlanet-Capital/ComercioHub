@@ -16,8 +16,12 @@
     // Fetch the stock analysis data
     const buttonClick = () => {
         data = [];
-        // TODO: pass in showBuy to have short options
-        makeRequest(`stock/graph?ticker=${ticker}`, null, null, false)
+        makeRequest(
+            `stock/graph?ticker=${ticker}&order_type=${showBuy ? 1 : -1}`,
+            null,
+            null,
+            false,
+        )
             .then((res) => {
                 data = JSON.parse(res);
             })

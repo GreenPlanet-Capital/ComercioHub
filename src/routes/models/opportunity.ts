@@ -22,7 +22,7 @@ export class Opportunity {
             json.ticker,
             json.order_type,
             json.default_price,
-            json.score
+            json.metadata_score
         );
     }
 
