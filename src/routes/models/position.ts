@@ -25,7 +25,7 @@ export class Order {
     }
 
     calculatePercentChange(): number {
-        return percentDiff(this.default_price, this.avg_price);
+        return percentDiff(this.default_price, this.avg_price) * this.order_type;
     }
 
     static fromJSON(json: any): Order {

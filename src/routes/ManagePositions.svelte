@@ -44,7 +44,7 @@
 			{
 				ticker: ticker,
 				amount: amount,
-				order_type: showBuy ? 1 : 0,
+				order_type: showBuy ? 1 : -1,
 			},
 			null,
 			false,
