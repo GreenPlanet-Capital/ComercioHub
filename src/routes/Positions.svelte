@@ -8,6 +8,7 @@
     import AgGrid from "@budibase/svelte-ag-grid";
     import { cellRendererFactory } from "./utils/renderer";
     import { options } from "./config/table_options";
+    import Change from "./widgets/Change.svelte";
 
     let positions = Positions.create();
     let data: any = [];
@@ -17,6 +18,16 @@
             headerName: "Ticker",
             field: "ticker",
             sortable: true,
+            cellRenderer: cellRendererFactory((c, p) => {
+                new Change({
+                    target: c.eGui,
+                    props: {
+                        size: "sm",
+                        since: p.value[0],
+                        value: p.value[1],
+                    },
+                });
+            }),
         },
         {
             headerName: "Order Type",
@@ -58,7 +69,7 @@
         data = positions.getPositions().map((pos) => {
             const order = pos.getOrders()[0];
             return {
-                ticker: pos.ticker,
+                ticker: [pos.ticker, order.calculatePercentChange()],
                 order_type: order.order_type === 1 ? "long" : "short",
                 default_price: order.default_price.toFixed(2),
                 avg_price: order.avg_price.toFixed(2),
