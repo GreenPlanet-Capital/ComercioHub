@@ -5,6 +5,7 @@
     import EnterPosition from "./EnterPosition.svelte";
     import ExitPosition from "./ExitPosition.svelte";
     import StockAnalysis from "./StockAnalysis.svelte";
+    import CryptoOrder from "./CryptoOrder.svelte";
     import { Button } from "flowbite-svelte";
 
     const logout = () => {
@@ -14,7 +15,7 @@
 </script>
 
 <div class="grid-container">
-    <Button class="absolute top-4 right-4" on:click={logout} color="blue">
+    <Button class="absolute top-4 right-4" on:click={logout} color="dark">
         Logout
     </Button>
 
@@ -27,6 +28,8 @@
                 <EnterPosition />
                 <div style="margin-left: 10px;"></div>
                 <ExitPosition />
+                <div style="margin-left: 10px;"></div>
+                <CryptoOrder />
             </div>
             <Positions />
         </div>
